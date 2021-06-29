@@ -4,6 +4,9 @@ lein: lein
 lein: 2.9.1
 dist: bionic
 
+before_install:
+  - chmod +x lein
+  
 services:
   - docker
 
