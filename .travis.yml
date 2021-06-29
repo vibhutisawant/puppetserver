@@ -18,19 +18,28 @@ jobs:
      arch: s390x
    
   include:
-    - &puppetserver_tests
+    - &java8
       stage: puppetserver tests
       name: "Java 8"
       jdk: openjdk8
-    - jdk: openjdk11
+    - &java11
+      jdk: openjdk11
       name: "Java 11"
-    - jdk: openjdk11
+    - &openjdk11_lein_args
+      jdk: openjdk11
       env: ADDITIONAL_LEIN_ARGS="with-profile fips"
       name: "Java 11 w/ FIPS"
-    - jdk: openjdk11
+    - &openjdk_multithreaded
+      jdk: openjdk11
       env: MULTITHREADED=true
       name: "Java 11 w/ multithreaded"
-    - <<: *puppetserver_tests
+    - <<: *java8
+      arch: s390x
+    - <<: *java11
+      arch: s390x
+    - <<: *openjdk11_lein_args
+      arch: s390x
+    - <<: *openjdk_multithreaded
       arch: s390x
       
     - &puppetserver_vulnerability_scan
