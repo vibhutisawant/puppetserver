@@ -8,6 +8,7 @@ services:
 script:
   - ./ext/travisci/test.sh
   - $TRAVIS_BUILD_DIR/ext/travisci/secscan.sh "$TRAVIS_BUILD_DIR/src/clj" "clj"
+
 jobs:
   allow_failures:
    - stage: puppetserver tests
@@ -22,17 +23,21 @@ jobs:
       stage: puppetserver tests
       name: "Java 8"
       jdk: openjdk8
+      arch: s390x
     - &java11
       jdk: openjdk11
       name: "Java 11"
+      arch: s390x
     - &openjdk11_lein_args
       jdk: openjdk11
       env: ADDITIONAL_LEIN_ARGS="with-profile fips"
       name: "Java 11 w/ FIPS"
+      arch: s390x
     - &openjdk_multithreaded
       jdk: openjdk11
       env: MULTITHREADED=true
       name: "Java 11 w/ multithreaded"
+      arch: s390x
     - <<: *java8
       arch: s390x
     - <<: *java11
@@ -44,6 +49,7 @@ jobs:
       
     - &puppetserver_vulnerability_scan
       stage: puppetserver vulnerability scan
+      arch: s390x
       script:
         - lein nvd check
     - <<: *puppetserver_vulnerability_scan
@@ -52,6 +58,7 @@ jobs:
       stage: puppetserver container tests
       dist: focal
       language: ruby
+      arch: s390x
       rvm: 2.6.5
       env:
         - DOCKER_COMPOSE_VERSION=1.28.6
