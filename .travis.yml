@@ -9,8 +9,17 @@ script:
   - ./ext/travisci/test.sh
   - $TRAVIS_BUILD_DIR/ext/travisci/secscan.sh "$TRAVIS_BUILD_DIR/src/clj" "clj"
 jobs:
+  allow_failures:
+   - stage: puppetserver tests
+     arch: s390x
+   - stage: puppetserver vulnerability scan
+     arch: s390x
+   - stage: puppetserver container tests
+     arch: s390x
+   
   include:
-    - stage: puppetserver tests
+    - &puppetserver_tests
+      stage: puppetserver tests
       name: "Java 8"
       jdk: openjdk8
     - jdk: openjdk11
@@ -21,10 +30,17 @@ jobs:
     - jdk: openjdk11
       env: MULTITHREADED=true
       name: "Java 11 w/ multithreaded"
-    - stage: puppetserver vulnerability scan
+    - <<: *puppetserver_tests
+      arch: s390x
+      
+    - &puppetserver_vulnerability_scan
+      stage: puppetserver vulnerability scan
       script:
         - lein nvd check
-    - stage: puppetserver container tests
+    - <<: *puppetserver_vulnerability_scan
+      arch: s390x
+    - &puppetserver_container_tests
+      stage: puppetserver container tests
       dist: focal
       language: ruby
       rvm: 2.6.5
@@ -50,6 +66,18 @@ jobs:
         - make test
       after_script:
         - docker buildx rm travis_builder
+    - <<: *puppetserver_container_tests
+      arch: s390x
+      before_install:
+        - sudo rm /usr/local/bin/docker-compose
+        - sudo apt-get update
+        - sudo apt-get install -y python3-pip libffi-dev libssl-dev
+        - sudo pip3 install cryptography==3.3.2
+        - sudo pip3 install docker-compose==1.29.1
+        - mkdir -vp ~/.docker/cli-plugins
+        - curl --location https://github.com/docker/buildx/releases/download/v${DOCKER_BUILDX_VERSION}/buildx-v${DOCKER_BUILDX_VERSION}.linux-amd64 > ~/.docker/cli-plugins/docker-buildx
+        - chmod +x ~/.docker/cli-plugins/docker-buildx
+        - docker buildx create --name travis_builder --use
 
 notifications:
   email: false
