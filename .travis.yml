@@ -26,7 +26,7 @@ jobs:
       stage: puppetserver tests
       name: "Java 8"
       jdk: openjdk8
-      arch: s390x
+      arch: amd64
     - &java11
       jdk: openjdk11
       name: "Java 11"
