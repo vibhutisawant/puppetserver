@@ -6,6 +6,7 @@ services:
   - docker
 
 script:
+  - sudo cat /etc/sysconfig/puppetserver
   - ./ext/travisci/test.sh
   - $TRAVIS_BUILD_DIR/ext/travisci/secscan.sh "$TRAVIS_BUILD_DIR/src/clj" "clj"
 
