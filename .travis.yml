@@ -23,9 +23,12 @@ jobs:
       stage: puppetserver tests
       name: "Java 8"
       language: java
+      jdk:
+        - openjdk11
+      os: linux
+      arch:
+        - s390x
       dist: focal
-      jdk: openjdk8
-      arch: s390x
       before_install: 
         - sudo env LEIN_ROOT=true curl -L -o /usr/local/bin/lein https://raw.githubusercontent.com/technomancy/leiningen/2.9.1/bin/lein
         - sudo chmod +x /usr/local/bin/lein
