@@ -7,7 +7,6 @@ services:
 
 before_install: 
   - sudo apt-get update 
-  - mkdir ~/bin
   - sudo curl https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein > ~/bin/lein
   - sudo chmod u+x ~/bin/lein
 script:
