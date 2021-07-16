@@ -1,10 +1,11 @@
 language: clojure
-lein: 2.9.1
+#lein: 2.9.1
 dist: bionic
   
 services:
   - docker
 
+before_script: sudo apt-get update && sudo ap-get install -y leiningen
 script:
   - sudo cat /etc/sysconfig/puppetserver
   - ./ext/travisci/test.sh
