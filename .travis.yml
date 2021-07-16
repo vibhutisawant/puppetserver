@@ -5,7 +5,11 @@ dist: bionic
 services:
   - docker
 
-before_script: sudo apt-get update && sudo ap-get install -y leiningen
+before_install: 
+  - sudo apt-get update 
+  - mkdir ~/bin
+  - sudo curl https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein > ~/bin/lein
+  - sudo chmod u+x ~/bin/lein
 script:
   - sudo cat /etc/sysconfig/puppetserver
   - ./ext/travisci/test.sh
