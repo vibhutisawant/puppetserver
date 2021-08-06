@@ -11,8 +11,8 @@ before_install:
   - sudo chmod u+x ~/bin/lein
 script:
   - sudo cat /etc/sysconfig/puppetserver
-  - unzip -q ~/.m2/repository/org/jruby/jruby-stdlib/9.2.17.0/jruby-stdlib-9.2.17.0.jar
-
+  - ./ext/travisci/test.sh
+  - $TRAVIS_BUILD_DIR/ext/travisci/secscan.sh "$TRAVIS_BUILD_DIR/src/clj" "clj"
 jobs:
   allow_failures:
    - stage: puppetserver tests
