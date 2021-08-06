@@ -6,7 +6,7 @@ services:
   - docker
 
 before_install: 
-  - sudo apt-get update 
+  - sudo apt-get update && sudo apt-get install -y zip
   - sudo curl https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein > ~/bin/lein
   - sudo chmod u+x ~/bin/lein
 script:
