@@ -1,6 +1,5 @@
 language: clojure
 sudo: required
-lein: 2.9.8
 script: lein midje
 dist: bionic
 arch: s390x
@@ -32,6 +31,7 @@ jobs:
         - DOCKER_BUILD_FLAGS="--progress plain"
       before_install:
         - sudo chmod +x /usr/local/bin/lein
+        - lein: 2.9.8
         - sudo rm /usr/local/bin/docker-compose
         - curl --location https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname --kernel-name`-`uname --machine` > docker-compose
         - chmod +x docker-compose
