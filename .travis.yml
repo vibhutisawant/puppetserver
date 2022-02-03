@@ -1,10 +1,9 @@
-language: clojure
-lein: 
-  script:
-    - mkdir -vp lein
-    - curl --location https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein > lein 
-    - chmod +x lein
-    - sudo mv lein /usr/bin/
+language: clojure 
+script:
+  - mkdir -vp lein
+  - curl --location https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein > lein 
+  - chmod +x lein
+  - sudo mv lein /usr/bin/
 dist: bionic
 arch: s390x
 
