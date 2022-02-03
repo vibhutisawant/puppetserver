@@ -1,5 +1,4 @@
 language: clojure
-lein: 2.9.8
 dist: bionic
 arch: s390x
 
@@ -7,6 +6,9 @@ services:
   - docker
 
 script:
+  - wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
+  - chmod +x lein
+  - sudo mv lein /usr/bin/
   - ./ext/travisci/test.sh
   - $TRAVIS_BUILD_DIR/ext/travisci/secscan.sh "$TRAVIS_BUILD_DIR/src/clj" "clj"
 jobs:
@@ -19,9 +21,6 @@ jobs:
     - jdk: openjdk11
       env: MULTITHREADED=true
       name: "Java 11 w/ multithreaded"
-    - stage: puppetserver vulnerability scan
-      script:
-        - lein nvd check
     - stage: puppetserver container tests
       dist: focal
       language: ruby
