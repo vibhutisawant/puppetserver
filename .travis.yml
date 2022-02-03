@@ -1,6 +1,5 @@
 language: clojure
 sudo: required
-lein: 2.6.1
 dist: bionic
 arch: s390x
 
