@@ -13,6 +13,10 @@ jobs:
     - stage: puppetserver tests
       name: "Java 11"
     - jdk: openjdk11
+      script:
+       - wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
+       - chmod +x lein
+       - sudo mv lein /usr/bin/
       env: ADDITIONAL_LEIN_ARGS="with-profile fips"
       name: "Java 11 w/ FIPS"
     - jdk: openjdk11
@@ -28,9 +32,6 @@ jobs:
         # necessary to prevent overwhelming TravisCI build output limits
         - DOCKER_BUILD_FLAGS="--progress plain"
       before_install:
-        - wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
-        - chmod +x lein
-        - sudo mv lein /usr/bin/
         - sudo rm /usr/local/bin/docker-compose
         - curl --location https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname --kernel-name`-`uname --machine` > docker-compose
         - chmod +x docker-compose
