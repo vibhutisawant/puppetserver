@@ -1,7 +1,7 @@
 language: clojure
 lein: 
   script:
-    - wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
+    - curl https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein > lein 
     - chmod +x lein
     - sudo mv lein /usr/bin/
 dist: bionic
