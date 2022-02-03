@@ -12,7 +12,6 @@ script:
 jobs:
   include:
     - stage: puppetserver tests
-    - jdk: openjdk11
       name: "Java 11"
     - jdk: openjdk11
       env: ADDITIONAL_LEIN_ARGS="with-profile fips"
@@ -20,6 +19,9 @@ jobs:
     - jdk: openjdk11
       env: MULTITHREADED=true
       name: "Java 11 w/ multithreaded"
+    - stage: puppetserver vulnerability scan
+      script:
+        - lein nvd check
     - stage: puppetserver container tests
       dist: focal
       language: ruby
@@ -30,7 +32,6 @@ jobs:
         # necessary to prevent overwhelming TravisCI build output limits
         - DOCKER_BUILD_FLAGS="--progress plain"
       before_install:
-        - sudo chmod +x /usr/local/bin/lein
         - sudo rm /usr/local/bin/docker-compose
         - curl --location https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname --kernel-name`-`uname --machine` > docker-compose
         - chmod +x docker-compose
