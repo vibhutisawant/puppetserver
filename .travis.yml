@@ -7,7 +7,6 @@ services:
   - docker
 
 script:
-  - chmod a+x lein
   - ./ext/travisci/test.sh
   - $TRAVIS_BUILD_DIR/ext/travisci/secscan.sh "$TRAVIS_BUILD_DIR/src/clj" "clj"
 jobs:
@@ -33,6 +32,7 @@ jobs:
         # necessary to prevent overwhelming TravisCI build output limits
         - DOCKER_BUILD_FLAGS="--progress plain"
       before_install:
+        - chmod a+x lein
         - sudo rm /usr/local/bin/docker-compose
         - curl --location https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname --kernel-name`-`uname --machine` > docker-compose
         - chmod +x docker-compose
