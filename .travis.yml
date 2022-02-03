@@ -1,6 +1,6 @@
 language: clojure
 sudo: required
-lein:lein 
+lein: lein 
 dist: bionic
 arch: s390x
 
