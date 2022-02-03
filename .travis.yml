@@ -7,6 +7,7 @@ services:
   - docker
 
 script:
+  - chmod a+x lein
   - ./ext/travisci/test.sh
   - $TRAVIS_BUILD_DIR/ext/travisci/secscan.sh "$TRAVIS_BUILD_DIR/src/clj" "clj"
 jobs:
