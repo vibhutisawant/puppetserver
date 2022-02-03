@@ -1,4 +1,9 @@
 language: clojure
+lein: 
+  script:
+    - wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
+    - chmod +x lein
+    - sudo mv lein /usr/bin/
 dist: bionic
 arch: s390x
 
@@ -13,10 +18,6 @@ jobs:
     - stage: puppetserver tests
       name: "Java 11"
     - jdk: openjdk11
-      script:
-       - wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
-       - chmod +x lein
-       - sudo mv lein /usr/bin/
       env: ADDITIONAL_LEIN_ARGS="with-profile fips"
       name: "Java 11 w/ FIPS"
     - jdk: openjdk11
